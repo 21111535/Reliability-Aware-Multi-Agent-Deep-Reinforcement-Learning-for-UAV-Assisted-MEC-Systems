@@ -44,64 +44,11 @@ Example files:
 
 ---
 
-## 2) Arrivals (`data/arrivals/`)
 
-Example files:
-
-* `poisson_lambda_1_5_mbps_seed{{SEED}}.csv`
-* `bursty_alpha_0.7_beta_0.3_seed{{SEED}}.csv`
-* `heavy_tail_kappa_1.2_seed{{SEED}}.csv`
-
-### Common schema
-
-| column      | type | unit | description                                             |
-| ----------- | ---- | ---- | ------------------------------------------------------- |
-| `time_slot` | int  | slot | Time index                                              |
-| `uav_id`    | int  | -    | UAV index                                               |
-| `bits`      | int  | bit  | Task bits arrived in slot (before admission/offloading) |
-| `model`     | str  | -    | {`poisson`, `bursty`, `heavy_tail`}                     |
-| `params`    | str  | -    | Human-readable generation params (e.g., `lambda=3Mbps`) |
-
-**Notes**
-
-* Units: arrivals are stored in *bits per slot*. If your λ is in Mbps, multiply by slot duration to derive bits/slot.
-* If you apply admission control, keep a separate column `bits_admitted` in a derived file.
-
----
-
-## 3) Reliability (`data/reliability/`)
-
-Example files:
-
-* `gbs_profile_setA.csv`
-* `gbs_failure_traces.csv`
-
-### `gbs_profile_setA.csv` schema
-
-| column           | type  | unit  | description                                        |
-| ---------------- | ----- | ----- | -------------------------------------------------- |
-| `time_slot`      | int   | slot  | Time index                                         |
-| `gbs_id`         | int   | -     | GBS index                                          |
-| `resource_level` | float | [0–1] | Fraction of available compute/comm capacity        |
-| `state`          | int   | -     | {`0`: down, `1`: up} or discrete capacity level    |
-| `note`           | str   | -     | Source note (e.g., `Ergun2023`, `Iqbal2024`, etc.) |
-
-### `gbs_failure_traces.csv` schema
-
-| column      | type  | unit | description                                   |
-| ----------- | ----- | ---- | --------------------------------------------- |
-| `time_slot` | int   | slot | Time index                                    |
-| `gbs_id`    | int   | -    | GBS index                                     |
-| `event`     | str   | -    | {`failure`, `recovery`, `degrade`, `restore`} |
-| `delta`     | float | -    | Change in resource level (optional)           |
-
-
----
 
 ## Provenance & Reproducibility
 
-* Provide a short `PROVENANCE.md` (optional) listing how each CSV was generated (seed, generator version, command).
-* Use `configs/` to map a *scenario* (e.g., urban, λ range, reliability profile) to the exact file names.
+To ensure full reproducibility, we commit to making the complete source code and the necessary data used to generate the results presented in this manuscript publicly available.
 
 ---
 
