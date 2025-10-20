@@ -15,36 +15,46 @@ This folder provides the **minimal artifacts** required to reproduce the plots a
 
 Example files:
 
-* `uav_traj_seed{{SEED}}.csv`
-* `altitudes.csv`
 
-### `uav_traj_seed{{SEED}}.csv` schema
+* configs/default.yaml
+* configs/workload_iot.yaml
+* configs/comms_tr3811_urban.yaml
+* configs/compute.yaml
+* configs/mobility_urban.yaml
+* configs/reliability_edge.yaml
 
-| column      | type  | unit | description                        |
-| ----------- | ----- | ---- | ---------------------------------- |
-| `time_slot` | int   | slot | Discrete time index `n`            |
-| `uav_id`    | int   | -    | UAV index `m`                      |
-| `x`         | float | m    | X coordinate                       |
-| `y`         | float | m    | Y coordinate                       |
-| `z`         | float | m    | Altitude                           |
-| `v_xy_max`  | float | m/s  | Max horizontal speed (from config) |
-| `v_z_max`   | float | m/s  | Max vertical speed (from config)   |
+| key                          | type  | unit      | default/value | description                                |
+| ---------------------------- | ----- | --------- | ------------- | ------------------------------------------ |
+| `workload.lambda_m_mbps`     | float | Mbps      | `[1, 5]`      | Task arrival rate range per UAV (λ_m)      |
+| `workload.cycles_per_bit`    | int   | cycle/bit | `1000`        | Task computational intensity (c_m)         |
+| `comms.bandwidth_mhz`        | float | MHz       | `2`           | Communication bandwidth (B)                |
+| `comms.noise_psd_dbm_per_hz` | float | dBm/Hz    | `-169`        | Noise power spectral density (N_0)         |
+| `comms.pathloss_exponent`    | float | —         | `2.5`         | Path-loss exponent ( \iota )               |
+| `comms.tx_power_dbm_max`     | float | dBm       | `26`          | Max transmit power ( p_m^{\max} )          |
+| `comms.carrier_freq_ghz`     | float | GHz       | `1`           | Carrier frequency ( f_r )                  |
+| `compute.f_cpu_max_ghz.uav`  | float | GHz       | `2`           | Max CPU frequency of UAV ( f_m^{\max} )    |
+| `compute.f_cpu_max_ghz.gbs`  | float | GHz       | `5`           | Max CPU frequency of GBS ( f_g^{\max} )    |
+| `compute.kappa.uav`          | float | —         | `1e-26`       | Energy-efficiency coef. (UAV) ( \kappa_m ) |
+| `compute.kappa.gbs`          | float | —         | `1e-28`       | Energy-efficiency coef. (GBS) ( \kappa_g ) |
+| `mobility.altitude_min_m`    | float | m         | `60`          | Minimum flight altitude ( H_\text{min} )   |
+| `mobility.altitude_max_m`    | float | m         | `100`         | Maximum flight altitude ( H_\text{max} )   |
+| `sim.slot_duration_s`        | float | s         | `1`           | Time-slot duration ( \tau )                |
+| `objective.delta_weight`     | float | —         | `0.4`         | Weighting factor ( \delta )                |
+| `objective.beta_norm`        | float | —         | `10`          | Normalization coefficient ( \beta )        |
+| `control.V`                  | float | —         | `400`         | Lyapunov control parameter ( V )           |
+| `reliability.delta_g`        | float | —         | `0.05`        | GBS resource evolution rate ( \delta_g )   |
+| `reliability.phi_b`          | float | —         | `0.1`         | Degradation step parameter ( \phi_b )      |
+| `reliability.sigma_b`        | float | —         | `0.4`         | Variability parameter ( \sigma_b )         |
+| `reliability.psi_r`          | float | —         | `0.2`         | Recovery step parameter ( \psi_r )         |
 
-### `altitudes.csv` schema
-
-| column       | type  | unit | description                         |
-| ------------ | ----- | ---- | ----------------------------------- |
-| `uav_id`     | int   | -    | UAV index                           |
-| `altitude_m` | float | m    | Planned cruise altitude for the UAV |
 
 **Notes**
 
-* Trajectories cover initial and final waypoints from `configs/mobility_urban.yaml`.
-* If you simulate different seeds/scenarios, store them as separate files, e.g., `uav_traj_seed42.csv`.
+* air–ground communication model follows \textit{3GPP TR 38.811}, which provides non-normative yet widely adopted guidelines for UAV–BS links.
+* The UAV mobility and computational task generation model parameters are configured in accordance with representative UAV-assisted MEC studies \cite{12,14,18,22,23}, ensuring consistency with existing benchmarks and IoT-oriented scenarios.
+* GBS reliability parameters are set in line with recent edge-reliability literature \cite{Ergun2023Dynamic, Iqbal2024Application, Liang2023Holistic, Kaja2021Survivability}
 
 ---
-
-
 
 ## Provenance & Reproducibility
 
