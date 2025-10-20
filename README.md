@@ -5,17 +5,11 @@
 
 This folder provides the **minimal artifacts** required to reproduce the plots and metrics reported in the paper (without releasing the full training code). It contains:
 
-* **Mobility** (`data/mobility/`): UAV trajectories and altitude plans across time slots.
-* **Arrivals** (`data/arrivals/`): Task-arrival traces under *Poisson*, *bursty*, and *heavy-tailed* models.
-* **Reliability** (`data/reliability/`): GBS resource evolution and failure/recovery traces.
+* **Simulation Parameters** (`data/mobility/`): UAV trajectories and altitude plans across time slots.Task-arrival traces under *Poisson*, *bursty*, and *heavy-tailed* models. GBS resource evolution and failure/recovery traces.
 
-
-
-## 1) Mobility (`data/mobility/`)
+## 1) 
 
 Example files:
-
-
 * configs/default.yaml
 * configs/workload_iot.yaml
 * configs/comms_tr3811_urban.yaml
