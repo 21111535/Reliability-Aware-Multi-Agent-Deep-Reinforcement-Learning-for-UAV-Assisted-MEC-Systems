@@ -52,7 +52,7 @@ Example files:
 
 ## Provenance & Reproducibility
 
-To ensure full reproducibility, we commit to making the complete source code and the necessary data used to generate the results presented in this manuscript publicly available.
+To ensure full reproducibility, we commit to making the complete source code and necessary data used to generate the results presented in this paper publicly available upon acceptance.
 
 ---
 
